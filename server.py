@@ -1,6 +1,4 @@
 from quart import Quart, websocket
-import json
-import asyncio
 
 app = Quart(__name__)
 clients = []
