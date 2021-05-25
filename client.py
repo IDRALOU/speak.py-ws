@@ -4,6 +4,7 @@ import threading
 import base64
 import getpass
 import os
+import requests
 
 def send_message(ws):
     while True:
@@ -43,12 +44,13 @@ if __name__ == "__main__":
     url_chat = input("URL du chat (Exemple: jesaispasquoi.com): ")
     os.system("cls") if os.name == "nt" else os.system("clear")
     while True:
-        try:
+        r = requests.get(f"http://{url_chat}")
+        if r.url[:5] == "https":
             ws = websocket.WebSocketApp(f"wss://{url_chat}", on_message=on_message, on_open=on_open)
-            ws_check = ws.run_forever()
-            if ws_check == True:
-                print("L'URL du chat est incorrecte.")
-                input("Appuyez sur une touche pour continuer...")
-                os.kill(os.getpid(), 3)
-        except Exception as e:
-            print(e)
+        else:
+            ws = websocket.WebSocketApp(f"ws://{url_chat}", on_message=on_message, on_open=on_open)
+        ws_check = ws.run_forever()
+        if ws_check == True:
+            print("L'URL du chat est incorrecte.")
+            input("Appuyez sur une touche pour continuer...")
+            os.kill(os.getpid(), 3)
