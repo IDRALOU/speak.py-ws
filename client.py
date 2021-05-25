@@ -6,6 +6,13 @@ import getpass
 import os
 import requests
 
+def check_version():
+    r = requests.get("https://raw.githubusercontent.com/IDRALOU/speak.py-ws/main/version")
+    if r.text != "BÊTA\n":
+        print("Une nouvelle version est disponible, vous pouvez la télécharger sur https://github.com/IDRALOU/speak.py-ws")
+        input("Appuyez sur Entrée pour continuer...")
+        os.kill(os.getpid(), 3)
+
 def send_message(ws):
     while True:
         message = getpass.getpass("")
@@ -23,7 +30,7 @@ def on_message(ws, message):
     if message_json["type"] == "message":
         print(f"{message_json['username']}: {message_json['message']}")
     elif message_json["type"] == "connection":
-        print(f"{message_json['username']} s'est connecté")
+        print(f"{message_json['username']} s'est connecté sur le salon")
     elif message_json["type"] == "leave":
         print(f"{message_json['username']} a quitté le salon")
 
