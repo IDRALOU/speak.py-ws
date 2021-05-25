@@ -15,11 +15,6 @@ def send_message(ws):
             pass
 
 def on_message(ws, message):
-    if message == "nickname déjà enregistré":
-        os.system("cls")
-        print("Le nom d'utilisateur est déjà enregistré, veuillez en choisir un autre.")
-        input("Appuyez sur une touche pour continuer...")
-        os.kill(os.getpid(), 3)
     elif message == "close":
         os.kill(os.getpid(), 3)
     message_json = json.loads(message)
