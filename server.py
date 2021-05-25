@@ -35,10 +35,7 @@ async def home():
 @app.websocket("/")
 async def ws():
     message_new_connection = await websocket.receive_json()
-    if message_new_connection["username"] in nicknames:
-        await websocket.send("nickname déjà enregistré")
-        return
-    elif message_new_connection["event"] != "connect":
+    if message_new_connection["event"] != "connect":
         await websocket.send("close")
         return
     clients.append(websocket._get_current_object())
