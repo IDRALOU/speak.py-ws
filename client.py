@@ -15,7 +15,7 @@ def send_message(ws):
             pass
 
 def on_message(ws, message):
-    elif message == "close":
+    if message == "close":
         os.kill(os.getpid(), 3)
     message_json = json.loads(message)
     if not message_json["username"] == username:
