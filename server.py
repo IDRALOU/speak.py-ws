@@ -1,5 +1,16 @@
 from quart import Quart, websocket
 import json
+import requests
+import os
+
+def check_version():
+    r = requests.get("https://raw.githubusercontent.com/IDRALOU/speak.py-ws/main/version-client")
+    if r.text != "BÊTA\n":
+        print("Une nouvelle version est disponible, vous pouvez la télécharger sur https://github.com/IDRALOU/speak.py-ws")
+        input("Appuyez sur Entrée pour continuer...")
+        os.kill(os.getpid(), 3)
+
+check_version()
 
 app = Quart(__name__)
 clients = []
